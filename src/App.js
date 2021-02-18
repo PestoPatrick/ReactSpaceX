@@ -21,6 +21,8 @@ export default function App() {
         ships.push(list.ships[i])
     }
 
+    //getting the hang of this
+
     return(
         <div className="wrapper">
             <h1>My Grocery List</h1>
