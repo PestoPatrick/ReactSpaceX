@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import './App.css'
+import {getList} from './services/list'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        let mounted = true;
+        getList()
+            .then(items => {
+                if(mounted) {
+                    setList(items)
+                }
+            })
+        return () => mounted = false;
+    }, [])
+    let ships = []
+
+    for (let i in list.ships) {
+        ships.push(list.ships[i])
+    }
+
+    return(
+        <div className="wrapper">
+            <h1>My Grocery List</h1>
+            <ul>
+                {list.name}
+                {list.details}
+                {ships[0]}
+            </ul>
+        </div>
+    )
 }
 
-export default App;
+
